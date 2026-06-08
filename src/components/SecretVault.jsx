@@ -5,7 +5,7 @@ export default function SecretVault() {
   const [code, setCode] = useState('')
   const [unlocked, setUnlocked] = useState(false)
   const [error, setError] = useState(false)
-  const CORRECT_CODE = '0806' // Haziran 8 (08.06)
+  const CORRECT_CODE = '0906' // Haziran 9 (09.06)
 
   const handleKey = (num) => {
     if (code.length < 4 && !unlocked) {

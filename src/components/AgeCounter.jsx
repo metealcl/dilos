@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 // Diloş'un doğum tarihini buraya yaz (yıl, ay-1, gün)
-const BIRTH_DATE = new Date(2003, 5, 8) // 08 Haziran 2003
+const BIRTH_DATE = new Date(2003, 5, 9) // 09 Haziran 2003
 
 function getAge(birthDate) {
   const now = new Date()

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 const MSG =
-  'Dünyaya gelişin belki sıradan bir haziran günüydü ama seninle tanışmak çok güzel bir tesadüftü... İyi ki doğdun. O tatlı gülüşün, bu yeni yaşında da her şeyi güzelleştirmeye devam etsin. Kim bilir, belki de en güzel hikayeler henüz yazılmamıştır... ✦'
+  'Dünyaya gelişin belki sıradan bir 9 Haziran günüydü ama seninle tanışmak çok güzel bir tesadüftü... İyi ki doğdun. O tatlı gülüşün, bu yeni yaşında da her şeyi güzelleştirmeye devam etsin. Kim bilir, belki de en güzel hikayeler henüz yazılmamıştır... ✦'
 
 function useTypewriter(text, speed = 35, startDelay = 0) {
   const [shown, setShown] = useState('')

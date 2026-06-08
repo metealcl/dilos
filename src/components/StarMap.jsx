@@ -45,7 +45,7 @@ export default function StarMap() {
         <h2 className="font-playfair font-bold text-white text-4xl" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.15)' }}>
           Gökyüzü Haritası 🌌
         </h2>
-        <p className="text-white/60 font-nunito text-sm mt-3 uppercase tracking-widest">08 Haziran 2003 Gecesi</p>
+        <p className="text-white/60 font-nunito text-sm mt-3 uppercase tracking-widest">09 Haziran 2003 Gecesi</p>
       </motion.div>
 
       <div ref={ref} className="relative w-full aspect-square md:aspect-video rounded-3xl overflow-hidden shadow-2xl"

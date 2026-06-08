@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const NEXT_BIRTHDAY = new Date(2025, 5, 8) // 08 Haziran 2025
-const CREATED_DATE  = '08 Haziran 2024'
+const NEXT_BIRTHDAY = new Date(2025, 5, 9) // 09 Haziran 2025
+const CREATED_DATE  = '09 Haziran 2024'
 
 export default function FutureLetter() {
   const [msg, setMsg] = useState('')

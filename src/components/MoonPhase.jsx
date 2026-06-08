@@ -24,7 +24,7 @@ export default function MoonPhase() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <span className="text-white/40 font-nunito text-xs tracking-[0.4em] uppercase mb-3 block">08 Haziran 2003</span>
+            <span className="text-white/40 font-nunito text-xs tracking-[0.4em] uppercase mb-3 block">09 Haziran 2003</span>
             <h2 className="font-playfair font-bold text-white text-3xl md:text-4xl mb-4">
               Gökyüzünün Şahidi 🌔
             </h2>
