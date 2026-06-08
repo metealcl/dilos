@@ -69,31 +69,38 @@ export default function SecretVault() {
             </motion.div>
 
             {/* Keypad */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-6 max-w-[240px] mx-auto">
               {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
-                <button
+                <motion.button
                   key={num}
                   onClick={() => handleKey(num.toString())}
-                  className="h-14 rounded-full text-white/80 font-nunito text-xl font-bold active:scale-90 transition-transform cursor-pointer"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.05)' }}
+                  whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.08)' }}
+                  whileTap={{ scale: 0.95, backgroundColor: 'rgba(251,191,36,0.15)' }}
+                  className="h-16 w-16 mx-auto rounded-full text-white/80 font-nunito text-2xl font-light cursor-pointer flex items-center justify-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] border border-white/0 hover:border-white/5 transition-colors"
+                  style={{ background: 'rgba(255,255,255,0.03)' }}
                 >
                   {num}
-                </button>
+                </motion.button>
               ))}
               <div />
-              <button
+              <motion.button
                 onClick={() => handleKey('0')}
-                className="h-14 rounded-full text-white/80 font-nunito text-xl font-bold active:scale-90 transition-transform cursor-pointer"
-                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.05)' }}
+                whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.08)' }}
+                whileTap={{ scale: 0.95, backgroundColor: 'rgba(251,191,36,0.15)' }}
+                className="h-16 w-16 mx-auto rounded-full text-white/80 font-nunito text-2xl font-light cursor-pointer flex items-center justify-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] border border-white/0 hover:border-white/5 transition-colors"
+                style={{ background: 'rgba(255,255,255,0.03)' }}
               >
                 0
-              </button>
-              <button
+              </motion.button>
+              <motion.button
                 onClick={handleDelete}
-                className="h-14 rounded-full text-white/40 font-nunito text-sm font-bold active:scale-90 transition-transform flex items-center justify-center cursor-pointer"
+                whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.08)' }}
+                whileTap={{ scale: 0.95, backgroundColor: 'rgba(2ef,68,68,0.2)' }}
+                className="h-16 w-16 mx-auto rounded-full text-white/40 hover:text-red-400 font-nunito text-base font-light cursor-pointer flex items-center justify-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] border border-white/0 hover:border-red-500/20 transition-colors"
+                style={{ background: 'rgba(255,255,255,0.03)' }}
               >
                 ⌫
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         ) : (

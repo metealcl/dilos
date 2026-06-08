@@ -158,38 +158,21 @@ export default function Phase1({ onLaunch }) {
             >
               <motion.button
                 onClick={onLaunch}
-                onMouseEnter={() => setButtonHovered(true)}
-                onMouseLeave={() => setButtonHovered(false)}
-                className="relative group px-12 py-4 rounded-2xl overflow-hidden font-nunito font-black text-base md:text-lg text-white tracking-wider select-none"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
+                className="relative group px-10 py-3.5 rounded-full overflow-hidden font-nunito text-sm md:text-base text-white/90 tracking-[0.2em] uppercase select-none border border-white/10"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 style={{
-                  background: buttonHovered
-                    ? 'linear-gradient(135deg, #f97316, #f43f7e, #e11d48)'
-                    : 'linear-gradient(135deg, #fbbf24, #f97316, #f43f7e)',
-                  boxShadow: buttonHovered
-                    ? '0 0 50px rgba(249,115,22,0.7), 0 0 90px rgba(244,63,126,0.4), 0 16px 40px rgba(0,0,0,0.3)'
-                    : '0 0 30px rgba(251,191,36,0.4), 0 0 60px rgba(249,115,22,0.25), 0 12px 30px rgba(0,0,0,0.25)',
-                  transition: 'all 0.35s ease',
+                  background: 'rgba(255,255,255,0.03)',
+                  backdropFilter: 'blur(10px)',
+                  boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1), 0 10px 30px rgba(0,0,0,0.5)',
+                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
               >
-                {/* Shine */}
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{
-                    background: 'linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.22) 50%,transparent 100%)',
-                    backgroundSize: '200% 100%',
-                    animation: 'shimmer 1.6s linear infinite',
-                  }}
-                />
-                <span className="relative z-10 flex items-center gap-2">
-                  <span>Sürprizi Aç</span>
-                  <motion.span
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.2 }}
-                  >
-                    🎁
-                  </motion.span>
+                {/* Subtle hover glow behind text */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 transition-opacity duration-500" />
+                <span className="relative z-10 flex items-center gap-3">
+                  <span className="font-semibold text-amber-500/80 group-hover:text-amber-400 transition-colors duration-500">Sürprizi Aç</span>
+                  <span className="text-amber-500/50 group-hover:text-amber-400 transition-colors duration-500">→</span>
                 </span>
               </motion.button>
 
