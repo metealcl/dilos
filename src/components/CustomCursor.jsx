@@ -60,20 +60,14 @@ export default function CustomCursor() {
     rafRef.current = requestAnimationFrame(loop)
 
     const onMouse = (e) => { posRef.current = { x: e.clientX, y: e.clientY } }
-    const onTouch = (e) => {
-      const t = e.touches[0]
-      posRef.current = { x: t.clientX, y: t.clientY }
-    }
 
     window.addEventListener('mousemove', onMouse)
-    window.addEventListener('touchmove', onTouch, { passive: true })
 
     return () => {
-      cancelAnimationFrame(rafRef.current)
       window.removeEventListener('mousemove', onMouse)
-      window.removeEventListener('touchmove', onTouch)
+      cancelAnimationFrame(rafRef.current)
     }
   }, [])
 
-  return <div ref={containerRef} className="fixed inset-0 pointer-events-none" style={{ zIndex: 999999 }} />
+  return <div ref={containerRef} className="hidden md:block fixed inset-0 pointer-events-none" style={{ zIndex: 999999 }} />
 }

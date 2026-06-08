@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
-// Warm golden bokeh particles — no matrix, no cyber
-const PARTICLES = Array.from({ length: 55 }, (_, i) => ({
+// Warm golden bokeh particles — reduced count for mobile performance
+const PARTICLES = Array.from({ length: 25 }, (_, i) => ({
   id: i,
   x: Math.random() * 100,
   y: Math.random() * 100,
