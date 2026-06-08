@@ -1,13 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import CustomCursor from './components/CustomCursor'
 import Phase1 from './components/Phase1'
 import Phase2and3 from './components/Phase2and3'
+import Preloader from './components/Preloader'
 
 export default function App() {
   const [phase, setPhase] = useState('terminal') // 'terminal' | 'main'
+  const [loading, setLoading] = useState(true)
   const [shaking, setShaking] = useState(false)
   const [flashing, setFlashing] = useState(false)
+
+  useEffect(() => {
+    // Prevent scrolling while preloader is active
+    if (loading) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+  }, [loading])
 
   const handleLaunch = () => {
     // 1. Shake
@@ -34,6 +45,10 @@ export default function App() {
       }
       transition={shaking ? { duration: 0.55, ease: 'linear' } : {}}
     >
+      <AnimatePresence mode="wait">
+        {loading && <Preloader key="preloader" onComplete={() => setLoading(false)} />}
+      </AnimatePresence>
+
       <CustomCursor />
 
       {/* Flash overlay */}
