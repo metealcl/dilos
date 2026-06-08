@@ -2,26 +2,24 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 export default function Preloader({ onComplete }) {
-  const [progress, setProgress] = useState(0)
+  const [year, setYear] = useState(2003)
 
   useEffect(() => {
-    let start = 0
-    const duration = 2200 // 2.2 seconds total loading
-    const intervalTime = 40
-    const steps = duration / intervalTime
+    let currentYear = 2003
+    const targetYear = 2026
+    const totalDuration = 3500 // 3.5 seconds total
+    const intervalTime = totalDuration / (targetYear - 2003)
 
     const timer = setInterval(() => {
-      start += 100 / steps
-      if (start >= 100) {
-        setProgress(100)
+      currentYear++
+      if (currentYear >= targetYear) {
+        setYear(targetYear)
         clearInterval(timer)
         setTimeout(() => {
           onComplete()
-        }, 500) // Hold at 100% for half a second before fading out
+        }, 1000) // Hold at 2026 for a full second
       } else {
-        // Add random jitter to make it feel like real network loading
-        const randomJump = start + (Math.random() * 3 - 1)
-        setProgress(Math.min(Math.max(randomJump, 0), 99))
+        setYear(currentYear)
       }
     }, intervalTime)
 
@@ -30,41 +28,88 @@ export default function Preloader({ onComplete }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999999] bg-[#050203] flex flex-col items-center justify-center pointer-events-auto"
+      className="fixed inset-0 z-[9999999] bg-[#050203] flex flex-col items-center justify-center pointer-events-auto overflow-hidden"
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, filter: 'blur(10px)' }}
-      transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+      exit={{ opacity: 0, scale: 1.15, filter: 'blur(20px)' }}
+      transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div className="w-64 flex flex-col items-center">
-        {/* The elegant loading text */}
-        <motion.div 
-          className="text-amber-500/80 font-nunito tracking-[0.4em] text-[10px] mb-8 uppercase"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          Connecting to 08.06.2003
-        </motion.div>
+      <div className="relative flex items-center justify-center w-80 h-80">
+        
+        {/* Core Glowing Planet / Singularity */}
+        <div className="absolute w-24 h-24 rounded-full bg-gradient-to-tr from-amber-900/40 to-amber-500/20 shadow-[0_0_60px_rgba(251,191,36,0.3),inset_0_0_20px_rgba(251,191,36,0.5)] backdrop-blur-md border border-amber-500/20" />
 
-        {/* The extremely thin premium line */}
-        <div className="w-full h-[1px] bg-white/5 relative overflow-hidden rounded-full">
-          <motion.div 
-            className="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-amber-600 to-amber-400"
-            style={{ width: `${progress}%` }}
-            animate={{ boxShadow: '0 0 15px rgba(251,191,36,0.6)' }}
+        {/* 3D Orbit Ring 1 (Fast Inner) */}
+        <motion.div 
+          className="absolute w-40 h-40 rounded-full border border-amber-500/20"
+          style={{ borderTop: '3px solid rgba(251,191,36,0.9)', boxShadow: '0 -5px 15px rgba(251,191,36,0.4)' }}
+          animate={{ rotateX: 60, rotateY: 30, rotateZ: 360 }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+        />
+        
+        {/* 3D Orbit Ring 2 (Medium Middle) */}
+        <motion.div 
+          className="absolute w-56 h-56 rounded-full border border-amber-400/10"
+          style={{ borderBottom: '2px solid rgba(251,191,36,0.7)', boxShadow: '0 5px 20px rgba(251,191,36,0.3)' }}
+          animate={{ rotateX: 75, rotateY: -45, rotateZ: -360 }}
+          transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }}
+        />
+
+        {/* 3D Orbit Ring 3 (Slow Outer) */}
+        <motion.div 
+          className="absolute w-72 h-72 rounded-full border border-amber-300/5"
+          style={{ borderRight: '2px solid rgba(251,191,36,0.5)', boxShadow: '5px 0 25px rgba(251,191,36,0.2)' }}
+          animate={{ rotateX: 50, rotateY: 60, rotateZ: 360 }}
+          transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+        />
+
+        {/* Floating Particles Around Orbit */}
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_10px_white]"
+            animate={{
+              rotate: 360,
+              scale: [1, 1.5, 1],
+              opacity: [0.3, 1, 0.3]
+            }}
+            transition={{
+              rotate: { repeat: Infinity, duration: 2 + i, ease: "linear" },
+              scale: { repeat: Infinity, duration: 1 + i*0.5, ease: "easeInOut" },
+              opacity: { repeat: Infinity, duration: 1 + i*0.5, ease: "easeInOut" }
+            }}
+            style={{
+              originX: `${(i+2)*20}px`, // Varied orbit radius
+              originY: `${(i+1)*15}px`
+            }}
           />
-        </div>
+        ))}
 
-        {/* The percentage */}
-        <motion.div 
-          className="mt-6 text-white/40 font-playfair italic text-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          {Math.floor(progress)}%
-        </motion.div>
+        {/* Dynamic Year Counter in the Center */}
+        <div className="absolute flex flex-col items-center">
+          <motion.div 
+            className="text-4xl md:text-5xl font-playfair font-black text-white"
+            style={{ 
+              textShadow: '0 0 30px rgba(251,191,36,0.8), 0 0 10px rgba(255,255,255,0.8)',
+              fontVariantNumeric: 'tabular-nums'
+            }}
+            key={year}
+            initial={{ opacity: 0.5, scale: 0.8, filter: 'blur(4px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 0.15 }}
+          >
+            {year}
+          </motion.div>
+        </div>
       </div>
+
+      <motion.div 
+        className="mt-16 text-amber-500/70 font-nunito tracking-[0.5em] text-xs uppercase"
+        initial={{ opacity: 0, letterSpacing: '0.1em' }}
+        animate={{ opacity: 1, letterSpacing: '0.5em' }}
+        transition={{ duration: 2 }}
+      >
+        {year === 2026 ? "Orbit Complete" : "Initiating 23rd Orbit..."}
+      </motion.div>
     </motion.div>
   )
 }
