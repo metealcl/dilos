@@ -1,31 +1,20 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const NEXT_BIRTHDAY = new Date(2025, 5, 9) // 09 Haziran 2025
-const CREATED_DATE  = '09 Haziran 2024'
-
 export default function FutureLetter() {
   const [msg, setMsg] = useState('')
   const [sealed, setSealed] = useState(false)
-  const [savedMsg, setSavedMsg] = useState(
-    () => localStorage.getItem('dilos_future_letter') || ''
-  )
-  const [showLetter, setShowLetter] = useState(false)
-
-  const daysUntil = Math.max(
-    0,
-    Math.ceil((NEXT_BIRTHDAY - new Date()) / (1000 * 60 * 60 * 24))
-  )
 
   const seal = () => {
     if (!msg.trim()) return
-    localStorage.setItem('dilos_future_letter', msg.trim())
-    setSavedMsg(msg.trim())
     setSealed(true)
     setMsg('')
+    
+    // Hide the success message after 6 seconds
+    setTimeout(() => {
+      setSealed(false)
+    }, 6000)
   }
-
-  const reveal = () => setShowLetter(true)
 
   return (
     <section className="relative z-10 px-4 py-16 max-w-2xl mx-auto">
@@ -44,90 +33,12 @@ export default function FutureLetter() {
           Geleceğe Mektup 📬
         </h2>
         <p className="text-white/55 font-nunito text-sm mt-2">
-          Gelecekteki Diloş'a bir not bırak — 22. doğum günündeki hislerin 🤍
+          Kendine bir not bırak — 23. doğum günündeki hislerin 🤍
         </p>
       </motion.div>
 
       <AnimatePresence mode="wait">
-        {/* Show saved letter */}
-        {savedMsg && showLetter ? (
-          <motion.div
-            key="revealed"
-            className="rounded-3xl p-7"
-            style={{
-              background: 'linear-gradient(135deg,rgba(40,20,10,0.96),rgba(30,10,5,0.98))',
-              border: '2px solid rgba(251,191,36,0.25)',
-              boxShadow: '0 24px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)',
-            }}
-            initial={{ opacity: 0, scale: 0.9, rotateX: -10 }}
-            animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-            transition={{ type: 'spring', stiffness: 90, damping: 14 }}
-          >
-            <div className="flex items-center gap-2 mb-5">
-              <span className="text-2xl">📜</span>
-              <div>
-                <p className="font-nunito font-black text-amber-300 text-sm">Kendi Mektubun</p>
-                <p className="font-nunito text-amber-400/70 text-xs">Yazıldı: {CREATED_DATE}</p>
-              </div>
-            </div>
-            <p className="font-nunito text-amber-50/90 text-base leading-relaxed whitespace-pre-wrap">
-              "{savedMsg}"
-            </p>
-            <div className="mt-6 pt-4 border-t border-amber-200 flex justify-between items-center">
-              <p className="text-amber-600/55 text-xs font-nunito font-bold">— Diloş, 22 yaşında 💛</p>
-              <button
-                onClick={() => { setShowLetter(false); setSavedMsg(''); localStorage.removeItem('dilos_future_letter'); setSealed(false) }}
-                className="text-amber-400/60 hover:text-amber-600/80 text-xs font-nunito transition-colors"
-              >
-                Sil & Yeniden Yaz
-              </button>
-            </div>
-          </motion.div>
-        ) : savedMsg && !showLetter ? (
-          /* Sealed letter waiting */
-          <motion.div
-            key="sealed"
-            className="rounded-3xl p-7 flex flex-col items-center gap-6 text-center"
-            style={{
-              background: 'linear-gradient(135deg,rgba(0,0,0,0.6),rgba(0,0,0,0.3))',
-              backdropFilter: 'blur(24px)',
-              border: '1px solid rgba(255,255,255,0.15)',
-              boxShadow: '0 24px 60px rgba(0,0,0,0.3)',
-            }}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: 'spring', stiffness: 120 }}
-          >
-            <motion.div
-              className="text-7xl"
-              animate={{ rotate: [0, -6, 6, -4, 4, 0] }}
-              transition={{ repeat: Infinity, duration: 4, delay: 2 }}
-            >
-              📩
-            </motion.div>
-            <div>
-              <h3 className="text-white font-nunito font-black text-xl">Mektup Mühürlendi!</h3>
-              <p className="text-white/60 font-nunito text-sm mt-2">
-                23. doğum gününde açabilirsin 🔒<br />
-                <span className="text-white/40 text-xs mt-1 block">
-                  {daysUntil > 0 ? `${daysUntil} gün sonra açılabilir` : 'Artık açabilirsin! 🎉'}
-                </span>
-              </p>
-            </div>
-            <motion.button
-              onClick={reveal}
-              className="px-8 py-3 rounded-2xl text-white font-nunito font-black text-sm overflow-hidden relative"
-              style={{
-                background: 'linear-gradient(135deg,#fbbf24,#f97316)',
-                boxShadow: '0 8px 24px rgba(251,191,36,0.35)',
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {daysUntil > 0 ? `Yine de Aç 🔓` : 'Mektubu Aç 💌'}
-            </motion.button>
-          </motion.div>
-        ) : (
+        {!sealed ? (
           /* Write form */
           <motion.div
             key="write"
@@ -148,7 +59,7 @@ export default function FutureLetter() {
               <div>
                 <p className="text-white font-nunito font-black text-base">Kendine Yaz</p>
                 <p className="text-white/45 font-nunito text-xs mt-0.5">
-                  23. doğum gününde okuyacaksın 💛
+                  Bu mesaj sonsuza dek kaybolacak ve dileğin olarak seninle yaşayacaktır 🌌
                 </p>
               </div>
             </div>
@@ -156,7 +67,7 @@ export default function FutureLetter() {
             <div className="mb-4 px-4 py-3 rounded-2xl text-sm font-nunito text-white/55 italic"
               style={{ background: 'rgba(255,255,255,0.08)', border: '1px dashed rgba(255,255,255,0.2)' }}
             >
-              Şu an nasıl hissediyorsun? Hayallerini, korkularını, beklentilerini yaz. Bir yıl sonraki sen okuyacak 🤍
+              Şu an nasıl hissediyorsun? Hayallerini, korkularını, beklentilerini evrene bırak. 🤍
             </div>
 
             <textarea
@@ -196,19 +107,34 @@ export default function FutureLetter() {
               </motion.button>
             </div>
 
-            <AnimatePresence>
-              {sealed && (
-                <motion.div
-                  className="mt-4 py-3 px-4 rounded-2xl text-center text-white font-nunito font-bold text-sm"
-                  style={{ background: 'rgba(52,211,153,0.25)', border: '1px solid rgba(52,211,153,0.35)' }}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                >
-                  📩 Mektup mühürlendi! Bir yıl sonra aç! 🎉
-                </motion.div>
-              )}
-            </AnimatePresence>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="sealed"
+            className="rounded-3xl p-8 flex flex-col items-center gap-6 text-center"
+            style={{
+              background: 'linear-gradient(135deg,rgba(0,0,0,0.6),rgba(0,0,0,0.3))',
+              backdropFilter: 'blur(24px)',
+              border: '1px solid rgba(251,191,36,0.3)',
+              boxShadow: '0 24px 60px rgba(0,0,0,0.3), inset 0 0 20px rgba(251,191,36,0.1)',
+            }}
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ type: 'spring', stiffness: 100 }}
+          >
+            <motion.div
+              className="text-6xl"
+              animate={{ y: [-5, 5, -5] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            >
+              ✨
+            </motion.div>
+            <div>
+              <h3 className="text-amber-400 font-nunito font-black text-xl mb-2">Evrene Gönderildi</h3>
+              <p className="text-white/80 font-nunito text-base leading-relaxed italic">
+                "Bu mesaj sonsuza dek kayboldu ve bir dilek olarak seninle yaşamaya devam edecek..."
+              </p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
